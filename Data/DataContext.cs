@@ -1,3 +1,4 @@
+using _NET_Course.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class DataContext : DbContext

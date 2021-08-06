@@ -1,9 +1,16 @@
 using System.Text.Json.Serialization;
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
-public enum RpgClass
+
+namespace _NET_Course.Models
 {
-    Knight,
-    Assasin,
-    Mage
+    /// <summary>
+    /// An enum that containts all the availiable character classes.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum RpgClass
+    {
+        Knight,
+        Assasin,
+        Mage
+    }
 }
