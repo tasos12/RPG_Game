@@ -7,7 +7,7 @@ namespace _NET_Course.Services
 {
     public interface ICharacterService
     {
-        Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters();
+        Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters(int userID);
         Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id);
         Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto character);
         Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto character);

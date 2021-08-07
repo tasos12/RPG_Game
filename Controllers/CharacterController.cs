@@ -1,13 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using _NET_Course.Dto;
 using _NET_Course.Models;
 using _NET_Course.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 /// <summary>
 /// Handles and returns the http and data results of a request
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class CharacterController : ControllerBase
@@ -27,7 +31,8 @@ public class CharacterController : ControllerBase
     [Route("GetAll")]
     public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> Get()
     {
-        return Ok(await _characterService.GetAllCharacters());
+        int _id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        return Ok(await _characterService.GetAllCharacters(_id));
     }
 
     /// <summary>

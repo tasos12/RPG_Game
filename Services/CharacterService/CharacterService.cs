@@ -44,11 +44,11 @@ namespace _NET_Course.Services
         /// Gets all the characters from the database.
         /// </summary>
         /// <returns>The list of all characters in the database.</returns>
-        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
+        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters(int userID)
         {
             var _serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
 
-            var _dbCharacters = await _context.Characters.ToListAsync();
+            var _dbCharacters = await _context.Characters.Where(c => c.User.ID == userID).ToListAsync();
             _serviceResponse.Data = _dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
 
             return _serviceResponse;
