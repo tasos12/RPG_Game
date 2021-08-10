@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 /// <summary>
-/// Handles and returns the http and data results of a request
+/// An API endpoint for characters
 /// </summary>
 [Authorize]
 [ApiController]

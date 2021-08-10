@@ -9,6 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace _NET_Course.Data
 {
+    /// <summary>
+    /// An implementation of the interface that connects with the database to do User based functions.
+    /// </summary>
     public class AuthRepository : IAuthRepository
     {
         public readonly DataContext _context;
@@ -20,6 +23,12 @@ namespace _NET_Course.Data
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Authentificates a user and creates a token for his seassion.
+        /// </summary>
+        /// <param name="username">The username specified to find.</param>
+        /// <param name="password">The password to verify the user.</param>
+        /// <returns>A token for the user session if succesfull, otherwise User not found when the username is wrong or Wrong password if the password is false.</returns>
         public async Task<ServiceResponse<string>> Login(string username, string password)
         {
             var _response = new ServiceResponse<string>();
@@ -43,6 +52,12 @@ namespace _NET_Course.Data
             return _response;
         }
 
+        /// <summary>
+        /// Register's the user with its information and password on the database.
+        /// </summary>
+        /// <param name="user">The user information.</param>
+        /// <param name="password">The user's password.</param>
+        /// <returns>A service response with the user's id.</returns>
         public async Task<ServiceResponse<int>> Register(User user, string password)
         {
             ServiceResponse<int> _response = new ServiceResponse<int>();
@@ -66,6 +81,11 @@ namespace _NET_Course.Data
             return _response;
         }
 
+        /// <summary>
+        /// Searches the database for a user with the specified username.
+        /// </summary>
+        /// <param name="username">The username to be searched.</param>
+        /// <returns>True if username found, false if not found.</returns>
         public async Task<bool> UserExists(string username)
         {
             if(await _context.Users.AnyAsync(x => x.Username.ToLower().Equals(username.ToLower())))
@@ -75,6 +95,12 @@ namespace _NET_Course.Data
             return false;
         }
 
+        /// <summary>
+        /// Generates the password hash.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <param name="passwordHash"></param>
+        /// <param name="passwordSalt"></param>
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             using(var hmac = new System.Security.Cryptography.HMACSHA512())
@@ -84,6 +110,13 @@ namespace _NET_Course.Data
             }
         }
 
+        /// <summary>
+        /// Verifies the given password hash.
+        /// </summary>
+        /// <param name="password">The password to generate the hash.</param>
+        /// <param name="passwordHash">The hash to compare with the generated hash</param>
+        /// <param name="passwordSalt"></param>
+        /// <returns>True if the computed hash and the given hash is identical, False if not.</returns>
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
             using(var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
@@ -100,6 +133,11 @@ namespace _NET_Course.Data
             }
         }
 
+        /// <summary>
+        /// Creates the session token depending on the credentials and the description given.
+        /// </summary>
+        /// <param name="user">User information used to create the token.</param>
+        /// <returns>A JwtSecurityToken as string.</returns>
         private string CreateToken(User user) 
         {
             var _claims = new List<Claim>

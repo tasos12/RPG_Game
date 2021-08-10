@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _NET_Course.Cotrollers
 {
+    /// <summary>
+    /// An API endpoint for authentification.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     public class AuthController : ControllerBase
@@ -17,6 +20,11 @@ namespace _NET_Course.Cotrollers
             _authRepository = authRepository;
         }
 
+        /// <summary>
+        /// Register a user and their info to the database.
+        /// </summary>
+        /// <param name="request">A dto with user information.</param>
+        /// <returns>OK status code if successfull, otherwise Bad request status code.</returns>
         [HttpPost("Register")]
         public async Task<ActionResult<ServiceResponse<int>>> Register (UserRegisterDto request)
         {
@@ -32,8 +40,13 @@ namespace _NET_Course.Cotrollers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Authentificates the user information.
+        /// </summary>
+        /// <param name="request">A dto with user login information.</param>
+        /// <returns>OK status code if successfull, otherwise Bad request status code.</returns>
         [HttpPost("Login")]
-        public async Task<ActionResult<ServiceResponse<string>>> Login(UserRegisterDto request)
+        public async Task<ActionResult<ServiceResponse<string>>> Login(UserLoginDto request)
         {
             var response = await _authRepository.Login(
                 request.Username, request.Password

@@ -34,6 +34,7 @@ namespace _NET_Course
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "_NET_Course", Version = "v1" });
 
+                //My Security Operation Filter
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
@@ -49,6 +50,7 @@ namespace _NET_Course
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository, AuthRepository>();
 
+            //My Authentification
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
                 {
