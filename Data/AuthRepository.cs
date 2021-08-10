@@ -140,24 +140,29 @@ namespace _NET_Course.Data
         /// <returns>A JwtSecurityToken as string.</returns>
         private string CreateToken(User user) 
         {
+            // Represent attributes of the subject that are useful in the context of authentication and authorization operations. 
             var _claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()),
                 new Claim(ClaimTypes.Name, user.Username)
             };
-            
+
+            // Create Security key using private key from appsettings.
             var _key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
 
+            // Represents the cryptographic key and security algorithms that are used to generate a digital signature.
             var _creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
+            // Information about the token.
             var _tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(_claims),
-                Expires = System.DateTime.Now.AddDays(1),
+                Subject = new ClaimsIdentity(_claims),      //Information about the user corresponding to the token.
+                Expires = System.DateTime.Now.AddDays(1),   //Token expiration time.
                 SigningCredentials = _creds
             };
 
             var _tokenHandler = new JwtSecurityTokenHandler();
+            // Generate the token.
             var _token = _tokenHandler.CreateToken(_tokenDescriptor);
 
             return _tokenHandler.WriteToken(_token);
