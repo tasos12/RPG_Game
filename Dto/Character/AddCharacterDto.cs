@@ -1,6 +1,6 @@
 using _NET_Course.Models;
 
-namespace _NET_Course.Dto
+namespace _NET_Course.Dto.Character
 {
     public class AddCharacterDto
     {

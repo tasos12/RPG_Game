@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Http;
+using _NET_Course.Services.WeaponService;
 
 namespace _NET_Course
 {
@@ -47,8 +49,10 @@ namespace _NET_Course
 
             //My services
             services.AddScoped<ICharacterService, CharacterService>();
-            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IWeaponService, WeaponService>();
+            services.AddAutoMapper(typeof(Startup));
+            
 
             //My Authentification
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -62,6 +66,8 @@ namespace _NET_Course
                         ValidateAudience = false
                     };
                 });
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

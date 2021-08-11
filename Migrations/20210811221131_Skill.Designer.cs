@@ -3,14 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace _NET_Course.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210811221131_Skill")]
+    partial class Skill
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,26 +86,6 @@ namespace _NET_Course.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Skills");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Damage = 30,
-                            Name = "Fireball"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Damage = 30,
-                            Name = "Icicle"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Damage = 30,
-                            Name = "Breeze"
-                        });
                 });
 
             modelBuilder.Entity("_NET_Course.Models.User", b =>

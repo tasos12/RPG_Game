@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using _NET_Course.Dto;
+using _NET_Course.Dto.Character;
 using _NET_Course.Models;
 using _NET_Course.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -31,8 +29,7 @@ public class CharacterController : ControllerBase
     [Route("GetAll")]
     public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> Get()
     {
-        int _id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-        return Ok(await _characterService.GetAllCharacters(_id));
+        return Ok(await _characterService.GetAllCharacters());
     }
 
     /// <summary>
@@ -84,7 +81,7 @@ public class CharacterController : ControllerBase
     /// </summary>
     /// <param name="id">The character's id to be deleted.</param>
     /// <returns>An 200 OK status code if the character is updated succesfully, otherwise an An 404 NOT FOUND if the character is not found.</returns>
-    [HttpDelete("id")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> DeleteCharacter(int id)
     {
         var _response = await _characterService.DeleteCharacter(id);
@@ -94,5 +91,11 @@ public class CharacterController : ControllerBase
         }
 
         return Ok(_response);
+    }
+
+    [HttpPost("Skill")]
+    public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> AddCharacterSkill(AddCharacterSkillDto newSkill)
+    {
+        return Ok(await _characterService.AddCharacterSkill(newSkill));
     }
 }
