@@ -1,5 +1,6 @@
 
 using _NET_Course.Dto.Character;
+using _NET_Course.Dto.Fight;
 using _NET_Course.Dto.Skill;
 using _NET_Course.Dto.Weapon;
 using _NET_Course.Models;
@@ -13,5 +14,6 @@ public class AutoMapperProfile : Profile
         CreateMap<AddCharacterDto, Character>();
         CreateMap<Weapon, GetWeaponDto>();
         CreateMap<Skill, GetSkillDto>();
+        CreateMap<Character, HighScoreDto>();
     }
 }

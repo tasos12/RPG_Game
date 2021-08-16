@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.AspNetCore.Http;
 using _NET_Course.Services.WeaponService;
+using _NET_Course.Services.FightService;
 
 namespace _NET_Course
 {
@@ -51,8 +52,9 @@ namespace _NET_Course
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IWeaponService, WeaponService>();
-            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<IFightService, FightService>();
             
+            services.AddAutoMapper(typeof(Startup));        
 
             //My Authentification
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
